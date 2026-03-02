@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">good_teacher</string>
+    <string name="title_activity_main">good_teacher</string>
+    <string name="package_name">com.andreyka101.app</string>
+    <string name="custom_url_scheme">com.andreyka101.app</string>
+</resources>

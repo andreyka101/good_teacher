@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>My App with Push</title>
+</head>
+
+<body>
+  <header>
+    Список новых клиентов
+  </header>
+  <div class="info_box">
+    <!-- <div class="new_student">
+      <span class="name">
+        вика
+      </span>
+      <img src="public/menyu.svg" alt="">
+      <span class="phone">
+        +79525553333
+      </span>
+    </div> -->
+
+    <div class="none">
+      <!-- <img src="public/menyu.svg" width="40%" alt=""> -->
+      <img src="public/XVo6.gif" width="40%" alt="">
+    </div>
+  </div>
+
+
+  <div class="background_menu">
+    <div class="box_menu">
+      <div class="copy">
+        Скопировать номер
+      </div>
+      <a class="call">
+        Позвонить клиенту
+      </a>
+      <div class="delete">
+        Удалить клиента
+      </div>
+    </div>
+  </div>
+
+
+  <div class="background_remove">
+    <div class="box_remove">
+      <span>
+        Удалить клиента из списка на всегда?
+      </span>
+      <div class="delete_permanently">
+        удалить
+      </div>
+      <div class="cancel">
+        отмена
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+  <script type="module">
+    // Импортируем плагин (если используешь модули)
+    import { PushNotifications } from '@capacitor/push-notifications';
+    // const span = document.querySelector("span")
+
+    async function setupPushNotifications() {
+      // 1. Запрашиваем разрешение на уведомления (важно для Android 13+)
+      const permStatus = await PushNotifications.checkPermissions();
+      if (permStatus.receive === 'prompt') {
+        await PushNotifications.requestPermissions();
+      }
+
+      // 2. Регистрируем устройство в системе Push-уведомлений
+      await PushNotifications.register();
+
+      // 3. Слушаем событие "registration", чтобы получить токен устройства
+      PushNotifications.addListener('registration', (token) => {
+        console.log('Устройство зарегистрировано. Токен:', token.value);
+        // !!! ВАЖНО: Этот токен нужно отправить на твой сервер (NodeTS) !!!
+        fetch('https://api.goodschool.online/api/save-token', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+          },
+          // body: token.value
+          body: JSON.stringify({ token: token.value })
+        })
+        // span.innerHTML = "статус: токен(" + token.value + ")"
+        // alert('Токен устройства (отправь его на сервер): ' + token.value);
+      });
+
+      // 4. Слушаем ошибки при регистрации
+      PushNotifications.addListener('registrationError', (err) => {
+        // alert('Ошибка регистрации:', err.error);
+      });
+
+      // 5. Слушаем получение уведомления, когда приложение открыто
+      PushNotifications.addListener('pushNotificationReceived', (notification) => {
+        console.log('Уведомление получено:', notification);
+        // span.innerHTML = "статус: новое уведомление"
+        // alert('Новое уведомление: ' + notification.title);
+      });
+
+      // 6. Слушаем нажатие на уведомление
+      PushNotifications.addListener('pushNotificationActionPerformed', (notification) => {
+        console.log('По уведомлению кликнули:', notification);
+        // span.innerHTML = "статус: по уведомлению кликнули"
+        // Здесь можно обработать переход на нужную страницу
+      });
+    }
+
+    // Запускаем настройку, когда приложение готово
+    setupPushNotifications();
+  </script>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+
+</html>
