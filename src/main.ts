@@ -18,7 +18,7 @@ import './style.css'
 //     PushNotifications.addListener('registration', (token) => {
 //         console.log('Устройство зарегистрировано. Токен:', token.value);
 //         // !!! ВАЖНО: Этот токен нужно отправить на твой сервер (NodeTS) !!!
-//         fetch('https://api.goodschool.online/api/save-token', {
+//         fetch('https://api.tutorfive.ru/api/save-token', {
 //             method: 'POST',
 //             headers: {
 //                 'Content-Type': 'application/json;charset=utf-8'
@@ -68,7 +68,7 @@ const cancel_el = document.querySelector(".cancel") as HTMLDivElement
 const delete_permanently_el = document.querySelector(".delete_permanently") as HTMLDivElement
 
 (async () => {
-    let data = await fetch("https://api.goodschool.online/api/omega/get", {
+    let data = await fetch("https://api.tutorfive.ru/api/omega/get", {
         method: "POST",
         headers: {
             'Content-Type': 'application/json;charset=utf-8'
@@ -142,7 +142,7 @@ cancel_el?.addEventListener("click", () => {
     background_remove_el.classList.remove("see_flex")
 })
 delete_permanently_el?.addEventListener("click", async () => {
-    let data = await fetch("https://api.goodschool.online/api/omega/del", {
+    let data = await fetch("https://api.tutorfive.ru/api/omega/del", {
         method: "POST",
         headers: {
             'Content-Type': 'application/json;charset=utf-8'
@@ -153,7 +153,7 @@ delete_permanently_el?.addEventListener("click", async () => {
     }) as any
     data = await data.json()
     if (data.id == +(localStorage.getItem("id") + "")) {
-        let data = await fetch("https://api.goodschool.online/api/omega/get", {
+        let data = await fetch("https://api.tutorfive.ru/api/omega/get", {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'

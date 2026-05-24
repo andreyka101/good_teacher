@@ -83,7 +83,7 @@
       PushNotifications.addListener('registration', (token) => {
         console.log('Устройство зарегистрировано. Токен:', token.value);
         // !!! ВАЖНО: Этот токен нужно отправить на твой сервер (NodeTS) !!!
-        fetch('https://api.goodschool.online/api/save-token', {
+        fetch('https://api.tutorfive.ru/api/save-token', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json;charset=utf-8'
